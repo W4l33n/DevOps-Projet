@@ -42,6 +42,7 @@ jobs:
            java-version: '17'
            distribution: 'temurin'
            cache: 'maven'
+           server-id: github
            
       # Runs tests
       - name: Build Test Analyze with Maven
@@ -79,4 +80,12 @@ jobs:
           #Connexion registre GitHub
           echo "${{secrets.GITHUB_TOKEN}}" | docker login ghcr.io -u ${{github.actor}} --password-stdin
           #envoie IMAGE
+
           docker push $IMAGE
+      # Deploiement du package sur Github Packages (Uniquement sur push dans une branche précise)
+      - name: Publish to GitHub Packages
+        working-directory: projetDevops
+        # if: github.ref == 'refs/heads/main'    # À décommenter pour ne déployer que sur main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn -B deploy
