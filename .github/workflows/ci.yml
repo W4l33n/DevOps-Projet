@@ -43,8 +43,6 @@ jobs:
            distribution: 'temurin'
            cache: 'maven'
            server-id: github
-           server-username: ${{ github.actor }}
-           server-password: ${{ secrets.GITHUB_TOKEN }}
            
       # Runs tests
       - name: Build Test Analyze with Maven
