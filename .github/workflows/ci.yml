@@ -13,6 +13,7 @@ on: [push] #test sur la branche integration continue d'abord
 #sécurité pour limiter les droits du token GITHUB_TOKEN au strict minimum
 permissions: 
   contents: read
+  packages: write
   # Allows you to run this workflow manually from the Actions tab
   #workflow_dispatch:
   
@@ -41,6 +42,9 @@ jobs:
            java-version: '17'
            distribution: 'temurin'
            cache: 'maven'
+           server-id: github
+           server-username: ${{ github.actor }}
+           server-password: ${{ secrets.GITHUB_TOKEN }}
            
       # Runs tests
       - name: Build Test Analyze with Maven
@@ -66,3 +70,11 @@ jobs:
       #     key: ${{ runner.os }}-sonar
       #     restore-keys: ${{ runner.os }}-sonar
       # - name: Build and analyze
+
+      # Deploiement du package sur Github Packages (Uniquement sur push dans une branche précise)
+      - name: Publish to GitHub Packages
+        working-directory: projetDevops
+        # if: github.ref == 'refs/heads/main'    # À décommenter pour ne déployer que sur main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn -B deploy
