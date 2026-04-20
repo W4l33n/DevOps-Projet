@@ -44,6 +44,7 @@ jobs:
            
       # Runs tests
       - name: Build Test Analyze with Maven
+        working-directory: projetDevops
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
@@ -55,7 +56,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: test-reports
-          path: target/surefire-reports/*.xml
+          path: projetDevops/target/surefire-reports/*.xml
         
       #SonarQube
       # - name: Cache SonarQube packages
