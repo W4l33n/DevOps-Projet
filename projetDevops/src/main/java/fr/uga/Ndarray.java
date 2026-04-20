@@ -64,8 +64,8 @@ public class Ndarray {
         if (step == 0)
             throw new IllegalArgumentException("step supérieur à 0");
         int n = (int) ((to - from) / step);
-        float[] arr = new float[n];
-        for (int i = 0; i < n; i++) {
+        float[] arr = new float[n+1];
+        for (int i = 0; i <= n; i++) {
             arr[i] = from + i * step;
         }
         return new Ndarray(arr);
@@ -108,7 +108,7 @@ public class Ndarray {
             sb.append("[");
             for (int i = 0; i < array.length; i++) {
                 if (i > 0)
-                    sb.append(",\n         ");
+                    sb.append(",\n       ");
                 sb.append(rowToString(array[i]));
             }
             sb.append("]");

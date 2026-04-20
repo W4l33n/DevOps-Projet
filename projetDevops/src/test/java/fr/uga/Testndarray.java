@@ -94,8 +94,8 @@ public class Testndarray {
     // arange de 0 à 5 avec un pas de 1
     public void testArrangeEntier() {
         Ndarray a = Ndarray.arange(0f, 5f, 1f);
-        assertEquals(5, a.getSize());
-        for (int i = 0; i < 5; i++) {
+        assertEquals(6, a.getSize());
+        for (int i = 0; i <= 5; i++) {
             assertEquals((float) i, a.get(i));
         }
     }
@@ -104,10 +104,11 @@ public class Testndarray {
     // arange de 1 à 10 avec un pas de 3
     public void testArrangeEntier3() {
         Ndarray a = Ndarray.arange(1f, 10f, 3f);
-        assertEquals(3, a.getSize());
+        assertEquals(4, a.getSize());
         assertEquals(1, a.get(0));
         assertEquals(4, a.get(1));
         assertEquals(7, a.get(2));
+        assertEquals(10, a.get(3));
 
     }
 
@@ -115,9 +116,10 @@ public class Testndarray {
     // arange de 0 à 1 avec un pas de 0.5
     public void testArrangeFloat() {
         Ndarray a = Ndarray.arange(0f, 1f, 0.5f);
-        assertEquals(2, a.getSize());
+        assertEquals(3, a.getSize());
         assertEquals(0f, a.get(0));
         assertEquals(0.5f, a.get(1));
+        assertEquals(1f, a.get(2));
     }
 
     @Test
