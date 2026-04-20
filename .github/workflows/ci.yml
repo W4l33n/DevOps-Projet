@@ -43,26 +43,25 @@ jobs:
            cache: 'maven'
            
       # Runs tests
-      - name: Run Test with Maven
-        run: mvn test
-
+      - name: Build Test Analyze with Maven
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=M1-DevOps-Projet -Dsonar.projectName='M1-DevOps-Projet'
       # Runs results
       - name: Upload Tests Results
-        if: always() #run the results even if the test stops brutally (error)
+        #run the results even if the test stops brutally (error)
+        if: always() 
         uses: actions/upload-artifact@v4
         with:
           name: test-reports
           path: target/surefire-reports/*.xml
         
       #SonarQube
-      - name: Cache SonarQube packages
-        uses: actions/cache@v4
-        with:
-          path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
-      - name: Build and analyze
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=M1-DevOps-Projet -Dsonar.projectName='M1-DevOps-Projet'
+      # - name: Cache SonarQube packages
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: ~/.sonar/cache
+      #     key: ${{ runner.os }}-sonar
+      #     restore-keys: ${{ runner.os }}-sonar
+      # - name: Build and analyze
