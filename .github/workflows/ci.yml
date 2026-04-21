@@ -59,7 +59,17 @@ jobs:
         with:
           name: test-reports
           path: projetDevops/target/surefire-reports/*.xml
-        
+
+      # Génération du Site Web Maven (Javadoc + Rapports)
+      - name: Generate Maven Site & Javadoc
+        working-directory: projetDevops
+        run: mvn site
+
+      - name: Upload Maven Site Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: maven-site-javadoc
+          path: projetDevops/target/site/        
       #SonarQube
       # - name: Cache SonarQube packages
       #   uses: actions/cache@v4
