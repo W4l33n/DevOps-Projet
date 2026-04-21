@@ -149,6 +149,50 @@ public class Ndarray {
         }
     }
 
+    // Soustraction
+    public Ndarray sub(Ndarray other) {
+        if (!Arrays.equals(this.nshape, other.nshape)) {
+            throw new IllegalArgumentException("Les dimensions sont différentes");
+        }
+        if (this.ndim == 1) {
+            float[] result = new float[this.nsize];
+            for (int i = 0; i < this.nsize; i++) {
+                result[i] = this.array[0][i] - other.array[0][i];
+            }
+            return new Ndarray(result);
+        } else {
+            float[][] result = new float[this.nshape[0]][this.nshape[1]];
+            for (int i = 0; i < this.nshape[0]; i++) {
+                for (int j = 0; j < this.nshape[1]; j++) {
+                    result[i][j] = this.array[i][j] - other.array[i][j];
+                }
+            }
+            return new Ndarray(result);
+        }
+    }
+
+    // Multiplication
+    public Ndarray mul(Ndarray other) {
+        if (!Arrays.equals(this.nshape, other.nshape)) {
+            throw new IllegalArgumentException("Les dimensions sont différentes");
+        }
+        if (this.ndim == 1) {
+            float[] result = new float[this.nsize];
+            for (int i = 0; i < this.nsize; i++) {
+                result[i] = this.array[0][i] * other.array[0][i];
+            }
+            return new Ndarray(result);
+        } else {
+            float[][] result = new float[this.nshape[0]][this.nshape[1]];
+            for (int i = 0; i < this.nshape[0]; i++) {
+                for (int j = 0; j < this.nshape[1]; j++) {
+                    result[i][j] = this.array[i][j] * other.array[i][j];
+                }
+            }
+            return new Ndarray(result);
+        }
+    }
+
     // Reshape
     public Ndarray reshape(int... shape) {
         if (shape.length == 0 || shape.length > 2) {
