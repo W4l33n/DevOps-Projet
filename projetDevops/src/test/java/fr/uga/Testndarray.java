@@ -192,6 +192,53 @@ public class Testndarray {
         assertThrows(IllegalArgumentException.class, () -> a.add(b));
     }
 
+    // tests pour les soustractions
+    @Test
+    public void TestSub1D() {
+        Ndarray a = new Ndarray(new float[] { 5f, 6f, 7f });
+        Ndarray b = new Ndarray(new float[] { 1f, 2f, 3f });
+        Ndarray c = a.sub(b);
+        assertEquals(4f, c.get(0));
+        assertEquals(4f, c.get(1));
+        assertEquals(4f, c.get(2));
+    }
+
+    @Test
+    public void TestSub2D() {
+        Ndarray a = new Ndarray(new float[][] { { 5f, 6f }, { 7f, 8f } });
+        Ndarray b = new Ndarray(new float[][] { { 1f, 2f }, { 3f, 4f } });
+        Ndarray c = a.sub(b);
+        assertEquals(4f, c.get(0, 0));
+        assertEquals(4f, c.get(1, 1));
+    }
+
+    @Test
+    public void TestSubInvalidShape() {
+        Ndarray a = new Ndarray(new float[] { 1f, 2f, 3f });
+        Ndarray b = Ndarray.zeros(2, 2);
+        assertThrows(IllegalArgumentException.class, () -> a.sub(b));
+    }
+
+    // tests pour les multiplications
+    @Test
+    public void TestMul1D() {
+        Ndarray a = new Ndarray(new float[] { 1f, 2f, 3f });
+        Ndarray b = new Ndarray(new float[] { 4f, 5f, 6f });
+        Ndarray c = a.mul(b);
+        assertEquals(4f, c.get(0));
+        assertEquals(10f, c.get(1));
+        assertEquals(18f, c.get(2));
+    }
+
+    @Test
+    public void TestMul2D() {
+        Ndarray a = new Ndarray(new float[][] { { 2f, 3f }, { 4f, 5f } });
+        Ndarray b = new Ndarray(new float[][] { { 3f, 4f }, { 5f, 6f } });
+        Ndarray c = a.mul(b);
+        assertEquals(6f, c.get(0, 0));
+        assertEquals(30f, c.get(1, 1));
+    }
+
     // tests pour le reshape
     @Test
     public void TestReshape1DTo2D() {
