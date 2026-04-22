@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>App.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">projetDevops</a> &gt; <a href="index.source.html" class="el_package">fr.uga</a> &gt; <span class="el_source">App.java</span></div><h1>App.java</h1><pre class="source lang-java linenums">package fr.uga;
+
+
+<span class="nc" id="L4">public class App {</span>
+    public static void main(String[] args) {
+<span class="nc" id="L6">        System.out.println(&quot;\n-------Démonstration de notre bibliothèque Ndarray-------\n&quot;);</span>
+
+        //Méthodes de fabrication
+<span class="nc" id="L9">        Ndarray t0=Ndarray.zeros(2,3);</span>
+<span class="nc" id="L10">        Ndarray t1=Ndarray.ones(2,3);</span>
+<span class="nc" id="L11">        System.out.println(&quot;---Tableau de zéros---\n&quot;+t0.toString()+&quot;\n&quot;);</span>
+<span class="nc" id="L12">        System.out.println(&quot;Tableau de uns:\n&quot;+t1.toString()+&quot;\n&quot;);</span>
+
+        //Arange
+<span class="nc" id="L15">        Ndarray t2=Ndarray.arange(2,6,2);</span>
+<span class="nc" id="L16">        System.out.println(&quot;---Tableau de 2 à 6 avec des pas de 2---\n&quot;+t2.toString()+&quot;\n&quot;);</span>
+
+
+        //Addition
+<span class="nc" id="L20">        Ndarray add=t1.add(t1);</span>
+<span class="nc" id="L21">        System.out.println(&quot;---Addition tableau uns et uns---\n&quot;+add.toString()+&quot;\n&quot;);</span>
+
+        //Soustraction
+<span class="nc" id="L24">        System.out.println(&quot;---Soustraction---\n&quot;);</span>
+<span class="nc" id="L25">        Ndarray t3=Ndarray.ones(3);</span>
+<span class="nc" id="L26">        System.out.println(t2.toString()+&quot;\n&quot;+t3.toString()+&quot;\n&quot;);</span>
+<span class="nc" id="L27">        Ndarray sub=t2.sub(t3);</span>
+<span class="nc" id="L28">        System.out.println(&quot;----Resultat soustraction---\n&quot;+sub.toString()+&quot;\n&quot;);</span>
+
+        // Multiplication
+<span class="nc" id="L31">        System.out.println(&quot;---Multiplication---\n&quot;);</span>
+<span class="nc" id="L32">        System.out.println(t2.toString()+&quot;\n&quot;+t3.toString()+&quot;\n&quot;);</span>
+<span class="nc" id="L33">        Ndarray mul=t2.mul(t3);</span>
+<span class="nc" id="L34">        System.out.println(&quot;---Résultat multiplication---\n&quot;+mul.toString()+&quot;\n&quot;);</span>
+
+
+        //Reshape
+<span class="nc" id="L38">        Ndarray t4=Ndarray.arange(2, 12, 2);</span>
+<span class="nc" id="L39">        Ndarray reshape=t4.reshape(2,3);</span>
+<span class="nc" id="L40">        System.out.println(&quot;---Reshape du tableau de 2 à 12 avec pas de 2 à 1D vers (2x3)---\n&quot;+reshape.toString()+&quot;\n&quot;);</span>
+
+        //Accès élément
+<span class="nc" id="L43">        System.out.println(&quot;---Récupérer des valeurs---&quot;);</span>
+<span class="nc" id="L44">        System.out.println(&quot;---Dimension 1---&quot;);</span>
+<span class="nc" id="L45">        System.out.println(t2.toString());</span>
+<span class="nc" id="L46">        System.out.println(&quot;Valeur à [0]: &quot;+t2.get(0)+&quot;\n&quot;);</span>
+<span class="nc" id="L47">        System.out.println(&quot;---Dimension 2---&quot;);</span>
+<span class="nc" id="L48">        System.out.println(reshape.toString());</span>
+<span class="nc" id="L49">        System.out.println(&quot;Valeur à [0,0]: &quot;+reshape.get(0,0)+&quot;\n&quot;);</span>
+<span class="nc" id="L50">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
