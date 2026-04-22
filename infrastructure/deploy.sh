@@ -23,7 +23,7 @@ echo "$IP ansible_user=ubuntu" > inventory.ini
 echo ">>> Attente de 15 secondes pour le démarrage du serveur SSH..."
 sleep 15
 
-echo ">>> Emballage du projet depuis votre ordinateur..." # Ça permet d'éviter de passer le projet en public
+echo ">>> Emballage du projet depuis notre ordinateur..." # Ça permet d'éviter de passer le projet en public
 mkdir -p project
 cp -R ../projetDevops ./project/
 cp ../Dockerfile ./project/ 2>/dev/null || true

@@ -11,12 +11,13 @@ Pour la configuration de la CI/CD via GitHub Actions, nous nous sommes aidés de
 
 ## 3. Outils utilisés
 - **Git** pour versionner notre code source.
-- **Maven** pour construire les différentes phases de votre projet.
+- **Maven** pour construire les différentes phases de notre projet.
 - **JUnit 5** pour les tests unitaires.
 - **Jacoco** comme outil d'évaluation de la couverture de code intégré à Maven (qui échoue si la couverture est insuffisante).
 - Un dépôt **Github** pour héberger notre code source versionné.
 - **SonarQube** : Utilisation des ressources données pour mettre en place l'analyse statique afin de détecter les bugs et code smells.
 - **GitHub Packages** : Utilisé pour la livraison continue de la librairie construite par Maven.
+- **Docker**: image docker avec une demonstration des différentes fonctionnalitées que propose notre bibliothèque
 
 ## 4. Liste des fonctionnalités fournies par notre service
 Dans le cadre de ce projet, nous avons implémenté une bibliothèque de manipulation de tableaux multidimensionnels inspirée de NumPy (Python), développée en Java.
@@ -32,7 +33,11 @@ Pour le projet nous avons décidé de faire des branches pour chaque fonctionnal
 Pour la validation il faut au moins qu'une personne fasse une revue du code que quelqu'un souhaite merger sur une branche autre que le main. Pour la branche main, toute l'équipe doit être au courant des changements à apporter et doit procéder à une revue du code stricte avec l'utilisation des **Pull Requests**.
 
 ## 6. Liste et description des images Docker produites
-*(À compléter)*
+**Nom Image**:mon-ndarray-demo
+**Description**: Demonstration de notre bibliothèque avec toutes les fonctionnalités.
+**Dépot(lien)**:https://github.com/W4l33n/DevOps-Projet/pkgs/container/devops-projet%2Fmon-ndarray-demo
+**Commande**:docker pull ghcr.io/w4l33n/devops-projet/mon-ndarray-demo:latest
+docker run ghcr.io/w4l33n/devops-projet/mon-ndarray-demo:latest
 
 ## 7. Feedback (Retour sur les différents outils utilisés)
 
