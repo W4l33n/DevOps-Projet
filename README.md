@@ -1,20 +1,20 @@
 # DevOps-Projet
-Projet hébergé sur Github.com
-
+### Statut et Qualité du Code
 [![CI/CD Pipeline](https://github.com/W4l33n/DevOps-Projet/actions/workflows/ci.yml/badge.svg)](https://github.com/W4l33n/DevOps-Projet/actions/workflows/ci.yml)
 [![Coverage](https://img.shields.io/badge/Coverage-80%25%2B-brightgreen.svg)](https://W4l33n.github.io/DevOps-Projet/jacoco/index.html)
 ![SonarQube](https://img.shields.io/badge/SonarQube-Passed-success.svg)
-[![Maven Package](https://img.shields.io/badge/GitHub%20Packages-Deployed-blue)](https://github.com/W4l33n/DevOps-Projet/packages)
+
+### Documentation et Distribution
 [![Javadoc](https://img.shields.io/badge/Documentation-Javadoc-brightgreen)](https://W4l33n.github.io/DevOps-Projet/apidocs/index.html)
 [![Project Site](https://img.shields.io/badge/Maven-Project%20Site-blue)](https://W4l33n.github.io/DevOps-Projet/index.html)
+[![Maven Package](https://img.shields.io/badge/GitHub%20Packages-Deployed-blue)](https://github.com/W4l33n/DevOps-Projet/packages)
+
+### Stack Technique et Infrastructure
 ![Java 21](https://img.shields.io/badge/Java-21-orange.svg)
 ![Infrastructure](https://img.shields.io/badge/Infrastructure-Terraform%20%7C%20Ansible-623CE4.svg)
 ![Cloud](https://img.shields.io/badge/Cloud-Google%20Cloud-4285F4.svg)
 
-Badges si on met publique uniquement :
-![Sonar Quality Gate](https://img.shields.io/sonar/quality_gate/W4l33n_DevOps-Projet?server=https%3A%2F%2Fsonarcloud.io)
-![Lines of Code](https://img.shields.io/tokei/lines/github/W4l33n/DevOps-Projet)
-![GitHub license](https://img.shields.io/github/license/W4l33n/DevOps-Projet)
+### Statistiques du Dépôt
 ![GitHub last commit](https://img.shields.io/github/last-commit/W4l33n/DevOps-Projet)
 ![GitHub repo size](https://img.shields.io/github/repo-size/W4l33n/DevOps-Projet)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/W4l33n/DevOps-Projet)
@@ -49,7 +49,15 @@ Pour le projet nous avons décidé de faire des branches pour chaque fonctionnal
 Pour la validation il faut au moins qu'une personne fasse une revue du code que quelqu'un souhaite merger sur une branche autre que le main. Pour la branche main, toute l'équipe doit être au courant des changements à apporter et doit procéder à une revue du code stricte avec l'utilisation des **Pull Requests**.
 
 ## 6. Liste et description des images Docker produites
-*(À compléter)*
+- **Nom Image**:mon-ndarray-demo
+- **Description**: Demonstration de notre bibliothèque avec toutes les fonctionnalités.
+- **Dépot(lien)**:https://github.com/W4l33n/DevOps-Projet/pkgs/container/devops-projet%2Fmon-ndarray-demo
+- **Commande**:
+#Télécharger l'image  
+docker pull ghcr.io/w4l33n/devops-projet/mon-ndarray-demo:latest
+  
+#Exécuter l'image  
+docker run ghcr.io/w4l33n/devops-projet/mon-ndarray-demo:latest
 
 ## 7. Déploiement Infrastructure-as-Code
 Nous avons mis en place un déploiement automatisé sur le Cloud Google (GCP) :

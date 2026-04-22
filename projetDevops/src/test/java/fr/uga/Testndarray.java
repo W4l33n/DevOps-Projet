@@ -94,8 +94,8 @@ public class Testndarray {
     // arange de 0 à 5 avec un pas de 1
     public void testArrangeEntier() {
         Ndarray a = Ndarray.arange(0f, 5f, 1f);
-        assertEquals(5, a.getSize());
-        for (int i = 0; i < 5; i++) {
+        assertEquals(6, a.getSize());
+        for (int i = 0; i <= 5; i++) {
             assertEquals((float) i, a.get(i));
         }
     }
@@ -104,10 +104,11 @@ public class Testndarray {
     // arange de 1 à 10 avec un pas de 3
     public void testArrangeEntier3() {
         Ndarray a = Ndarray.arange(1f, 10f, 3f);
-        assertEquals(3, a.getSize());
+        assertEquals(4, a.getSize());
         assertEquals(1, a.get(0));
         assertEquals(4, a.get(1));
         assertEquals(7, a.get(2));
+        assertEquals(10, a.get(3));
 
     }
 
@@ -115,9 +116,10 @@ public class Testndarray {
     // arange de 0 à 1 avec un pas de 0.5
     public void testArrangeFloat() {
         Ndarray a = Ndarray.arange(0f, 1f, 0.5f);
-        assertEquals(2, a.getSize());
+        assertEquals(3, a.getSize());
         assertEquals(0f, a.get(0));
         assertEquals(0.5f, a.get(1));
+        assertEquals(1f, a.get(2));
     }
 
     @Test
@@ -146,7 +148,6 @@ public class Testndarray {
         Ndarray a = new Ndarray(new float[][] { { 1f, 2f }, { 3f, 4f } });
         String s = a.toString();
 
-        assertTrue(s.startsWith("array("));
         assertTrue(s.contains("1."));
         assertTrue(s.contains("2."));
         assertTrue(s.contains("3."));
@@ -158,7 +159,6 @@ public class Testndarray {
         Ndarray a = new Ndarray(new float[] { 3f, 4f });
         String s = a.toString();
 
-        assertTrue(s.startsWith("array("));
         assertTrue(s.contains("3."));
         assertTrue(s.contains("4."));
     }
@@ -188,6 +188,53 @@ public class Testndarray {
         Ndarray a = new Ndarray(new float[] { 1f, 2f, 3f });
         Ndarray b = Ndarray.zeros(2, 2);
         assertThrows(IllegalArgumentException.class, () -> a.add(b));
+    }
+
+    // tests pour les soustractions
+    @Test
+    public void TestSub1D() {
+        Ndarray a = new Ndarray(new float[] { 5f, 6f, 7f });
+        Ndarray b = new Ndarray(new float[] { 1f, 2f, 3f });
+        Ndarray c = a.sub(b);
+        assertEquals(4f, c.get(0));
+        assertEquals(4f, c.get(1));
+        assertEquals(4f, c.get(2));
+    }
+
+    @Test
+    public void TestSub2D() {
+        Ndarray a = new Ndarray(new float[][] { { 5f, 6f }, { 7f, 8f } });
+        Ndarray b = new Ndarray(new float[][] { { 1f, 2f }, { 3f, 4f } });
+        Ndarray c = a.sub(b);
+        assertEquals(4f, c.get(0, 0));
+        assertEquals(4f, c.get(1, 1));
+    }
+
+    @Test
+    public void TestSubInvalidShape() {
+        Ndarray a = new Ndarray(new float[] { 1f, 2f, 3f });
+        Ndarray b = Ndarray.zeros(2, 2);
+        assertThrows(IllegalArgumentException.class, () -> a.sub(b));
+    }
+
+    // tests pour les multiplications
+    @Test
+    public void TestMul1D() {
+        Ndarray a = new Ndarray(new float[] { 1f, 2f, 3f });
+        Ndarray b = new Ndarray(new float[] { 4f, 5f, 6f });
+        Ndarray c = a.mul(b);
+        assertEquals(4f, c.get(0));
+        assertEquals(10f, c.get(1));
+        assertEquals(18f, c.get(2));
+    }
+
+    @Test
+    public void TestMul2D() {
+        Ndarray a = new Ndarray(new float[][] { { 2f, 3f }, { 4f, 5f } });
+        Ndarray b = new Ndarray(new float[][] { { 3f, 4f }, { 5f, 6f } });
+        Ndarray c = a.mul(b);
+        assertEquals(6f, c.get(0, 0));
+        assertEquals(30f, c.get(1, 1));
     }
 
     // tests pour le reshape
