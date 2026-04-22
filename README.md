@@ -33,11 +33,16 @@ Pour le projet nous avons décidé de faire des branches pour chaque fonctionnal
 Pour la validation il faut au moins qu'une personne fasse une revue du code que quelqu'un souhaite merger sur une branche autre que le main. Pour la branche main, toute l'équipe doit être au courant des changements à apporter et doit procéder à une revue du code stricte avec l'utilisation des **Pull Requests**.
 
 ## 6. Liste et description des images Docker produites
-**Nom Image**:mon-ndarray-demo
-**Description**: Demonstration de notre bibliothèque avec toutes les fonctionnalités.
-**Dépot(lien)**:https://github.com/W4l33n/DevOps-Projet/pkgs/container/devops-projet%2Fmon-ndarray-demo
-**Commande**:docker pull ghcr.io/w4l33n/devops-projet/mon-ndarray-demo:latest
+- **Nom Image**:mon-ndarray-demo
+- **Description**: Demonstration de notre bibliothèque avec toutes les fonctionnalités.
+- **Dépot(lien)**:https://github.com/W4l33n/DevOps-Projet/pkgs/container/devops-projet%2Fmon-ndarray-demo
+- **Commande**:
+#Télécharger l'image  
+docker pull ghcr.io/w4l33n/devops-projet/mon-ndarray-demo:latest
+  
+#Exécuter l'image  
 docker run ghcr.io/w4l33n/devops-projet/mon-ndarray-demo:latest
+
 
 ## 7. Feedback (Retour sur les différents outils utilisés)
 
