@@ -82,6 +82,7 @@ jobs:
       - name: Build and Push Docker Image
         working-directory: projetDevops
         run: |
+          ls -la target/
           #forcer le nom du notre repository en minuscule pour docker
           REPO_LOWER=$(echo "${{github.repository}}" | tr '[:upper:]' '[:lower:]')
           IMAGE="ghcr.io/$REPO_LOWER/mon-ndarray-demo:latest"
