@@ -148,7 +148,6 @@ public class Testndarray {
         Ndarray a = new Ndarray(new float[][] { { 1f, 2f }, { 3f, 4f } });
         String s = a.toString();
 
-        assertTrue(s.startsWith("array("));
         assertTrue(s.contains("1."));
         assertTrue(s.contains("2."));
         assertTrue(s.contains("3."));
@@ -160,7 +159,6 @@ public class Testndarray {
         Ndarray a = new Ndarray(new float[] { 3f, 4f });
         String s = a.toString();
 
-        assertTrue(s.startsWith("array("));
         assertTrue(s.contains("3."));
         assertTrue(s.contains("4."));
     }

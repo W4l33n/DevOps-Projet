@@ -101,19 +101,20 @@ public class Ndarray {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("array(");
+        StringBuilder sb = new StringBuilder();
         if (ndim == 1) {
+            sb.append("[");
             sb.append(rowToString(array[0]));
+            sb.append("]");
         } else {
             sb.append("[");
             for (int i = 0; i < array.length; i++) {
                 if (i > 0)
-                    sb.append(",\n       ");
+                    sb.append(",\n ");
                 sb.append(rowToString(array[i]));
             }
             sb.append("]");
         }
-        sb.append(")");
         return sb.toString();
     }
 
