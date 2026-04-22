@@ -2,6 +2,15 @@
 
 import java.util.Arrays;
 
+/**
+ * Classe Ndarray : Bibliothèque de calcul scientifique pour tableaux
+ * multidimensionnels.
+ * Elle permet de manipuler des tableaux 1D et 2D avec des opérations
+ * mathématiques de base.
+ * 
+ * @author JACOLIN Loa, REMY Marine, VOLF DIANA
+ * @version 1.0
+ */
 public class Ndarray {
     private final int ndim;
     private final int[] nshape;
@@ -9,228 +18,282 @@ public class Ndarray {
     private final float[][] array;
 
     // Constructeur création de NDArray avec une valeur (zeros,ones,...)
-<span class="fc" id="L12">    private Ndarray(int[] shape, float nombre) {</span>
-<span class="pc bpc" id="L13" title="1 of 4 branches missed.">        if (shape.length == 0 || shape.length &gt; 2) {</span>
-<span class="fc" id="L14">            throw new IllegalArgumentException(&quot;Dimension 1 et 2 supportés seulement&quot;);</span>
+<span class="fc" id="L21">    private Ndarray(int[] shape, float nombre) {</span>
+<span class="pc bpc" id="L22" title="1 of 4 branches missed.">        if (shape.length == 0 || shape.length &gt; 2) {</span>
+<span class="fc" id="L23">            throw new IllegalArgumentException(&quot;Dimension 1 et 2 supportés seulement&quot;);</span>
         }
-<span class="fc" id="L16">        this.ndim = shape.length;</span>
-<span class="fc" id="L17">        this.nshape = shape.clone();</span>
-<span class="fc bfc" id="L18" title="All 2 branches covered.">        if (shape.length == 1) {</span>
-<span class="fc" id="L19">            this.nsize = shape[0];</span>
-<span class="fc" id="L20">            this.array = new float[1][shape[0]];</span>
-<span class="fc" id="L21">            Arrays.fill(this.array[0], nombre);</span>
+<span class="fc" id="L25">        this.ndim = shape.length;</span>
+<span class="fc" id="L26">        this.nshape = shape.clone();</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">        if (shape.length == 1) {</span>
+<span class="fc" id="L28">            this.nsize = shape[0];</span>
+<span class="fc" id="L29">            this.array = new float[1][shape[0]];</span>
+<span class="fc" id="L30">            Arrays.fill(this.array[0], nombre);</span>
         } else {
-<span class="fc" id="L23">            this.nsize = shape[0] * shape[1];</span>
-<span class="fc" id="L24">            this.array = new float[shape[0]][shape[1]];</span>
-<span class="fc bfc" id="L25" title="All 2 branches covered.">            for (float[] row : this.array) {</span>
-<span class="fc" id="L26">                Arrays.fill(row, nombre);</span>
+<span class="fc" id="L32">            this.nsize = shape[0] * shape[1];</span>
+<span class="fc" id="L33">            this.array = new float[shape[0]][shape[1]];</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">            for (float[] row : this.array) {</span>
+<span class="fc" id="L35">                Arrays.fill(row, nombre);</span>
             }
         }
-<span class="fc" id="L29">    }</span>
-
-    // NDArray 1D
-<span class="fc" id="L32">    public Ndarray(float[] tab) {</span>
-<span class="fc" id="L33">        this.nsize = tab.length;</span>
-<span class="fc" id="L34">        this.nshape = new int[] { nsize };</span>
-<span class="fc" id="L35">        this.ndim = 1;</span>
-<span class="fc" id="L36">        this.array = new float[1][tab.length];</span>
-<span class="fc" id="L37">        System.arraycopy(tab, 0, this.array[0], 0, tab.length);</span>
 <span class="fc" id="L38">    }</span>
 
-    // NDArray 2D
-<span class="fc" id="L41">    public Ndarray(float[][] tab) {</span>
-<span class="fc" id="L42">        int rows = tab.length;</span>
-<span class="fc" id="L43">        int cols = tab[0].length;</span>
-<span class="fc" id="L44">        this.ndim = 2;</span>
-<span class="fc" id="L45">        this.nsize = rows * cols;</span>
-<span class="fc" id="L46">        this.nshape = new int[] { rows, cols };</span>
-<span class="fc" id="L47">        this.array = new float[rows][cols];</span>
-<span class="fc bfc" id="L48" title="All 2 branches covered.">        for (int i = 0; i &lt; rows; i++) {</span>
-<span class="fc" id="L49">            System.arraycopy(tab[i], 0, this.array[i], 0, cols);</span>
-        }
+    /**
+     * Constructeur pour un tableau à une dimension (1D).
+     * 
+     * @param tab Le tableau de flottants source.
+     */
+<span class="fc" id="L45">    public Ndarray(float[] tab) {</span>
+<span class="fc" id="L46">        this.nsize = tab.length;</span>
+<span class="fc" id="L47">        this.nshape = new int[] { nsize };</span>
+<span class="fc" id="L48">        this.ndim = 1;</span>
+<span class="fc" id="L49">        this.array = new float[1][tab.length];</span>
+<span class="fc" id="L50">        System.arraycopy(tab, 0, this.array[0], 0, tab.length);</span>
 <span class="fc" id="L51">    }</span>
 
-    // Fonction de création
-
-    public static Ndarray zeros(int... shape) {
-<span class="fc" id="L56">        return new Ndarray(shape, 0f);</span>
-    }
-
-    public static Ndarray ones(int... shape) {
-<span class="fc" id="L60">        return new Ndarray(shape, 1f);</span>
-    }
-
-    public static Ndarray arange(float from, float to, float step) {
-<span class="fc bfc" id="L64" title="All 2 branches covered.">        if (step == 0)</span>
-<span class="fc" id="L65">            throw new IllegalArgumentException(&quot;step supérieur à 0&quot;);</span>
-<span class="fc" id="L66">        int n = (int) ((to - from) / step);</span>
-<span class="fc" id="L67">        float[] arr = new float[n+1];</span>
-<span class="fc bfc" id="L68" title="All 2 branches covered.">        for (int i = 0; i &lt;= n; i++) {</span>
-<span class="fc" id="L69">            arr[i] = from + i * step;</span>
+    /**
+     * Constructeur pour un tableau à deux dimensions (2D).
+     * 
+     * @param tab La matrice de flottants source.
+     */
+<span class="fc" id="L58">    public Ndarray(float[][] tab) {</span>
+<span class="fc" id="L59">        int rows = tab.length;</span>
+<span class="fc" id="L60">        int cols = tab[0].length;</span>
+<span class="fc" id="L61">        this.ndim = 2;</span>
+<span class="fc" id="L62">        this.nsize = rows * cols;</span>
+<span class="fc" id="L63">        this.nshape = new int[] { rows, cols };</span>
+<span class="fc" id="L64">        this.array = new float[rows][cols];</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        for (int i = 0; i &lt; rows; i++) {</span>
+<span class="fc" id="L66">            System.arraycopy(tab[i], 0, this.array[i], 0, cols);</span>
         }
-<span class="fc" id="L71">        return new Ndarray(arr);</span>
+<span class="fc" id="L68">    }</span>
+
+    /**
+     * Crée un tableau rempli de zéros selon la forme spécifiée.
+     * 
+     * @param shape Liste d'entiers définissant la forme (ex: 2, 3 pour une matrice
+     *              2x3).
+     * @return Une nouvelle instance de Ndarray.
+     */
+    public static Ndarray zeros(int... shape) {
+<span class="fc" id="L78">        return new Ndarray(shape, 0f);</span>
+    }
+
+    /**
+     * Crée un tableau rempli de la valeur 1 selon la forme spécifiée.
+     * 
+     * @param shape Liste d'entiers définissant la forme.
+     * @return Une nouvelle instance de Ndarray.
+     */
+    public static Ndarray ones(int... shape) {
+<span class="fc" id="L88">        return new Ndarray(shape, 1f);</span>
+    }
+
+    /**
+     * Génère un tableau 1D contenant une séquence de nombres.
+     * 
+     * @param from Valeur de début (inclusive).
+     * @param to   Valeur de fin (exclusive).
+     * @param step Pas de progression entre chaque valeur.
+     * @return Un Ndarray 1D.
+     * @throws IllegalArgumentException Si le pas est égal à zéro.
+     */
+    public static Ndarray arange(float from, float to, float step) {
+<span class="fc bfc" id="L101" title="All 2 branches covered.">        if (step == 0)</span>
+<span class="fc" id="L102">            throw new IllegalArgumentException(&quot;step supérieur à 0&quot;);</span>
+<span class="fc" id="L103">        int n = (int) ((to - from) / step);</span>
+<span class="fc" id="L104">        float[] arr = new float[n+1];</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">        for (int i = 0; i &lt;= n; i++) {</span>
+<span class="fc" id="L106">            arr[i] = from + i * step;</span>
+        }
+<span class="fc" id="L108">        return new Ndarray(arr);</span>
     }
 
     // getters
     public int getNdim() {
-<span class="fc" id="L76">        return ndim;</span>
+<span class="fc" id="L113">        return ndim;</span>
     }
 
     public int[] getShape() {
-<span class="fc" id="L80">        return nshape.clone();</span>
+<span class="fc" id="L117">        return nshape.clone();</span>
     }
 
     public int getSize() {
-<span class="fc" id="L84">        return nsize;</span>
+<span class="fc" id="L121">        return nsize;</span>
     }
 
     // Accès éléments
     public float get(int i) {
-<span class="fc bfc" id="L89" title="All 2 branches covered.">        if (ndim != 1)</span>
-<span class="fc" id="L90">            throw new IllegalStateException(&quot;utilisez get(i,j) pour 2D&quot;);</span>
-<span class="fc" id="L91">        return array[0][i];</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">        if (ndim != 1)</span>
+<span class="fc" id="L127">            throw new IllegalStateException(&quot;utilisez get(i,j) pour 2D&quot;);</span>
+<span class="fc" id="L128">        return array[0][i];</span>
     }
 
     public float get(int i, int j) {
-<span class="fc bfc" id="L95" title="All 2 branches covered.">        if (ndim != 2)</span>
-<span class="fc" id="L96">            throw new IllegalStateException(&quot;utilisez get(i) pour 1D&quot;);</span>
-<span class="fc" id="L97">        return array[i][j];</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">        if (ndim != 2)</span>
+<span class="fc" id="L133">            throw new IllegalStateException(&quot;utilisez get(i) pour 1D&quot;);</span>
+<span class="fc" id="L134">        return array[i][j];</span>
     }
 
     // Affichage
 
     @Override
     public String toString() {
-<span class="fc" id="L104">        StringBuilder sb = new StringBuilder();</span>
-<span class="fc bfc" id="L105" title="All 2 branches covered.">        if (ndim == 1) {</span>
-<span class="fc" id="L106">            sb.append(&quot;[&quot;);</span>
-<span class="fc" id="L107">            sb.append(rowToString(array[0]));</span>
-<span class="fc" id="L108">            sb.append(&quot;]&quot;);</span>
+<span class="fc" id="L141">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">        if (ndim == 1) {</span>
+<span class="fc" id="L143">            sb.append(&quot;[&quot;);</span>
+<span class="fc" id="L144">            sb.append(rowToString(array[0]));</span>
+<span class="fc" id="L145">            sb.append(&quot;]&quot;);</span>
         } else {
-<span class="fc" id="L110">            sb.append(&quot;[&quot;);</span>
-<span class="fc bfc" id="L111" title="All 2 branches covered.">            for (int i = 0; i &lt; array.length; i++) {</span>
-<span class="fc bfc" id="L112" title="All 2 branches covered.">                if (i &gt; 0)</span>
-<span class="fc" id="L113">                    sb.append(&quot;,\n &quot;);</span>
-<span class="fc" id="L114">                sb.append(rowToString(array[i]));</span>
+<span class="fc" id="L147">            sb.append(&quot;[&quot;);</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">            for (int i = 0; i &lt; array.length; i++) {</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">                if (i &gt; 0)</span>
+<span class="fc" id="L150">                    sb.append(&quot;,\n &quot;);</span>
+<span class="fc" id="L151">                sb.append(rowToString(array[i]));</span>
             }
-<span class="fc" id="L116">            sb.append(&quot;]&quot;);</span>
+<span class="fc" id="L153">            sb.append(&quot;]&quot;);</span>
         }
-<span class="fc" id="L118">        return sb.toString();</span>
+<span class="fc" id="L155">        return sb.toString();</span>
     }
 
     private static String rowToString(float[] row) {
-<span class="fc" id="L122">        StringBuilder sb = new StringBuilder(&quot;[&quot;);</span>
-<span class="fc bfc" id="L123" title="All 2 branches covered.">        for (int i = 0; i &lt; row.length; i++) {</span>
-<span class="fc bfc" id="L124" title="All 2 branches covered.">            if (i &gt; 0)</span>
-<span class="fc" id="L125">                sb.append(&quot;, &quot;);</span>
-<span class="pc bpc" id="L126" title="1 of 2 branches missed.">            sb.append(row[i] == (int) row[i] ? (int) row[i] + &quot;.&quot; : row[i]);</span>
+<span class="fc" id="L159">        StringBuilder sb = new StringBuilder(&quot;[&quot;);</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">        for (int i = 0; i &lt; row.length; i++) {</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">            if (i &gt; 0)</span>
+<span class="fc" id="L162">                sb.append(&quot;, &quot;);</span>
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">            sb.append(row[i] == (int) row[i] ? (int) row[i] + &quot;.&quot; : row[i]);</span>
         }
-<span class="fc" id="L128">        return sb.append(&quot;]&quot;).toString();</span>
+<span class="fc" id="L165">        return sb.append(&quot;]&quot;).toString();</span>
     }
 
-    // Addition
+    /**
+     * Additionne deux tableaux élément par élément.
+     * 
+     * @param other Le Ndarray à ajouter à l'instance actuelle.
+     * @return Le résultat de l'addition dans un nouveau Ndarray.
+     * @throws IllegalArgumentException Si les formes des deux tableaux ne sont pas
+     *                                  identiques.
+     */
     public Ndarray add(Ndarray other) {
-<span class="fc bfc" id="L133" title="All 2 branches covered.">        if (!Arrays.equals(this.nshape, other.nshape)) {</span>
-<span class="fc" id="L134">            throw new IllegalArgumentException(&quot;Les dimensions sont différentes&quot;);</span>
-        }
-<span class="fc bfc" id="L136" title="All 2 branches covered.">        if (this.ndim == 1) {</span>
-<span class="fc" id="L137">            float[] result = new float[this.nsize];</span>
-<span class="fc bfc" id="L138" title="All 2 branches covered.">            for (int i = 0; i &lt; this.nsize; i++) {</span>
-<span class="fc" id="L139">                result[i] = this.array[0][i] + other.array[0][i];</span>
-            }
-<span class="fc" id="L141">            return new Ndarray(result);</span>
-        } else {
-<span class="fc" id="L143">            float[][] result = new float[this.nshape[0]][this.nshape[1]];</span>
-<span class="fc bfc" id="L144" title="All 2 branches covered.">            for (int i = 0; i &lt; this.nshape[0]; i++) {</span>
-<span class="fc bfc" id="L145" title="All 2 branches covered.">                for (int j = 0; j &lt; this.nshape[1]; j++) {</span>
-<span class="fc" id="L146">                    result[i][j] = this.array[i][j] + other.array[i][j];</span>
-                }
-            }
-<span class="fc" id="L149">            return new Ndarray(result);</span>
-        }
-    }
-
-    // Soustraction
-    public Ndarray sub(Ndarray other) {
-<span class="fc bfc" id="L155" title="All 2 branches covered.">        if (!Arrays.equals(this.nshape, other.nshape)) {</span>
-<span class="fc" id="L156">            throw new IllegalArgumentException(&quot;Les dimensions sont différentes&quot;);</span>
-        }
-<span class="fc bfc" id="L158" title="All 2 branches covered.">        if (this.ndim == 1) {</span>
-<span class="fc" id="L159">            float[] result = new float[this.nsize];</span>
-<span class="fc bfc" id="L160" title="All 2 branches covered.">            for (int i = 0; i &lt; this.nsize; i++) {</span>
-<span class="fc" id="L161">                result[i] = this.array[0][i] - other.array[0][i];</span>
-            }
-<span class="fc" id="L163">            return new Ndarray(result);</span>
-        } else {
-<span class="fc" id="L165">            float[][] result = new float[this.nshape[0]][this.nshape[1]];</span>
-<span class="fc bfc" id="L166" title="All 2 branches covered.">            for (int i = 0; i &lt; this.nshape[0]; i++) {</span>
-<span class="fc bfc" id="L167" title="All 2 branches covered.">                for (int j = 0; j &lt; this.nshape[1]; j++) {</span>
-<span class="fc" id="L168">                    result[i][j] = this.array[i][j] - other.array[i][j];</span>
-                }
-            }
-<span class="fc" id="L171">            return new Ndarray(result);</span>
-        }
-    }
-
-    // Multiplication
-    public Ndarray mul(Ndarray other) {
-<span class="pc bpc" id="L177" title="1 of 2 branches missed.">        if (!Arrays.equals(this.nshape, other.nshape)) {</span>
-<span class="nc" id="L178">            throw new IllegalArgumentException(&quot;Les dimensions sont différentes&quot;);</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">        if (!Arrays.equals(this.nshape, other.nshape)) {</span>
+<span class="fc" id="L178">            throw new IllegalArgumentException(&quot;Les dimensions sont différentes&quot;);</span>
         }
 <span class="fc bfc" id="L180" title="All 2 branches covered.">        if (this.ndim == 1) {</span>
 <span class="fc" id="L181">            float[] result = new float[this.nsize];</span>
 <span class="fc bfc" id="L182" title="All 2 branches covered.">            for (int i = 0; i &lt; this.nsize; i++) {</span>
-<span class="fc" id="L183">                result[i] = this.array[0][i] * other.array[0][i];</span>
+<span class="fc" id="L183">                result[i] = this.array[0][i] + other.array[0][i];</span>
             }
 <span class="fc" id="L185">            return new Ndarray(result);</span>
         } else {
 <span class="fc" id="L187">            float[][] result = new float[this.nshape[0]][this.nshape[1]];</span>
 <span class="fc bfc" id="L188" title="All 2 branches covered.">            for (int i = 0; i &lt; this.nshape[0]; i++) {</span>
 <span class="fc bfc" id="L189" title="All 2 branches covered.">                for (int j = 0; j &lt; this.nshape[1]; j++) {</span>
-<span class="fc" id="L190">                    result[i][j] = this.array[i][j] * other.array[i][j];</span>
+<span class="fc" id="L190">                    result[i][j] = this.array[i][j] + other.array[i][j];</span>
                 }
             }
 <span class="fc" id="L193">            return new Ndarray(result);</span>
         }
     }
 
-    // Reshape
+    /**
+     * Soustrait un tableau d'un autre, élément par élément.
+     * 
+     * @param other Le Ndarray à soustraire de l'instance actuelle.
+     * @return Le résultat de la soustraction dans un nouveau Ndarray.
+     * @throws IllegalArgumentException Si les formes ne correspondent pas.
+     */
+    public Ndarray sub(Ndarray other) {
+<span class="fc bfc" id="L205" title="All 2 branches covered.">        if (!Arrays.equals(this.nshape, other.nshape)) {</span>
+<span class="fc" id="L206">            throw new IllegalArgumentException(&quot;Les dimensions sont différentes&quot;);</span>
+        }
+<span class="fc bfc" id="L208" title="All 2 branches covered.">        if (this.ndim == 1) {</span>
+<span class="fc" id="L209">            float[] result = new float[this.nsize];</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">            for (int i = 0; i &lt; this.nsize; i++) {</span>
+<span class="fc" id="L211">                result[i] = this.array[0][i] - other.array[0][i];</span>
+            }
+<span class="fc" id="L213">            return new Ndarray(result);</span>
+        } else {
+<span class="fc" id="L215">            float[][] result = new float[this.nshape[0]][this.nshape[1]];</span>
+<span class="fc bfc" id="L216" title="All 2 branches covered.">            for (int i = 0; i &lt; this.nshape[0]; i++) {</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">                for (int j = 0; j &lt; this.nshape[1]; j++) {</span>
+<span class="fc" id="L218">                    result[i][j] = this.array[i][j] - other.array[i][j];</span>
+                }
+            }
+<span class="fc" id="L221">            return new Ndarray(result);</span>
+        }
+    }
+
+    /**
+     * Multiplie deux tableaux élément par élément.
+     * 
+     * @param other Le Ndarray à multiplier avec l'instance actuelle.
+     * @return Le résultat de la multiplication dans un nouveau Ndarray.
+     * @throws IllegalArgumentException Si les formes ne correspondent pas.
+     */
+    public Ndarray mul(Ndarray other) {
+<span class="pc bpc" id="L233" title="1 of 2 branches missed.">        if (!Arrays.equals(this.nshape, other.nshape)) {</span>
+<span class="nc" id="L234">            throw new IllegalArgumentException(&quot;Les dimensions sont différentes&quot;);</span>
+        }
+<span class="fc bfc" id="L236" title="All 2 branches covered.">        if (this.ndim == 1) {</span>
+<span class="fc" id="L237">            float[] result = new float[this.nsize];</span>
+<span class="fc bfc" id="L238" title="All 2 branches covered.">            for (int i = 0; i &lt; this.nsize; i++) {</span>
+<span class="fc" id="L239">                result[i] = this.array[0][i] * other.array[0][i];</span>
+            }
+<span class="fc" id="L241">            return new Ndarray(result);</span>
+        } else {
+<span class="fc" id="L243">            float[][] result = new float[this.nshape[0]][this.nshape[1]];</span>
+<span class="fc bfc" id="L244" title="All 2 branches covered.">            for (int i = 0; i &lt; this.nshape[0]; i++) {</span>
+<span class="fc bfc" id="L245" title="All 2 branches covered.">                for (int j = 0; j &lt; this.nshape[1]; j++) {</span>
+<span class="fc" id="L246">                    result[i][j] = this.array[i][j] * other.array[i][j];</span>
+                }
+            }
+<span class="fc" id="L249">            return new Ndarray(result);</span>
+        }
+    }
+
+    /**
+     * Redimensionne le tableau vers une nouvelle forme.
+     * 
+     * @param shape La nouvelle forme désirée.
+     * @return Un nouveau Ndarray avec la forme spécifiée mais les mêmes données.
+     * @throws IllegalArgumentException Si le nombre total d'éléments ne correspond
+     *                                  pas à l'original.
+     */
     public Ndarray reshape(int... shape) {
-<span class="pc bpc" id="L199" title="2 of 4 branches missed.">        if (shape.length == 0 || shape.length &gt; 2) {</span>
-<span class="nc" id="L200">            throw new IllegalArgumentException(&quot;Les dimensions doivent être 1 ou 2&quot;);</span>
+<span class="pc bpc" id="L262" title="2 of 4 branches missed.">        if (shape.length == 0 || shape.length &gt; 2) {</span>
+<span class="nc" id="L263">            throw new IllegalArgumentException(&quot;Les dimensions doivent être 1 ou 2&quot;);</span>
         }
 
-<span class="fc" id="L203">        int expectedSize = 1;</span>
-<span class="fc bfc" id="L204" title="All 2 branches covered.">        for (int dim : shape) {</span>
-<span class="fc" id="L205">            expectedSize *= dim;</span>
+<span class="fc" id="L266">        int expectedSize = 1;</span>
+<span class="fc bfc" id="L267" title="All 2 branches covered.">        for (int dim : shape) {</span>
+<span class="fc" id="L268">            expectedSize *= dim;</span>
         }
 
-<span class="fc bfc" id="L208" title="All 2 branches covered.">        if (expectedSize != this.nsize) {</span>
-<span class="fc" id="L209">            throw new IllegalArgumentException(&quot;La nouvelle forme doit avoir le même nombre d'éléments (&quot; + this.nsize</span>
+<span class="fc bfc" id="L271" title="All 2 branches covered.">        if (expectedSize != this.nsize) {</span>
+<span class="fc" id="L272">            throw new IllegalArgumentException(&quot;La nouvelle forme doit avoir le même nombre d'éléments (&quot; + this.nsize</span>
                     + &quot; attendu, &quot; + expectedSize + &quot; calculé).&quot;);
         }
 
         // Aplatir le tableau dans un tableau 1D
-<span class="fc" id="L214">        float[] flat = new float[this.nsize];</span>
-<span class="fc" id="L215">        int index = 0;</span>
-<span class="fc bfc" id="L216" title="All 2 branches covered.">        for (int i = 0; i &lt; this.array.length; i++) {</span>
-<span class="fc bfc" id="L217" title="All 2 branches covered.">            for (int j = 0; j &lt; this.array[i].length; j++) {</span>
-<span class="fc" id="L218">                flat[index++] = this.array[i][j];</span>
+<span class="fc" id="L277">        float[] flat = new float[this.nsize];</span>
+<span class="fc" id="L278">        int index = 0;</span>
+<span class="fc bfc" id="L279" title="All 2 branches covered.">        for (int i = 0; i &lt; this.array.length; i++) {</span>
+<span class="fc bfc" id="L280" title="All 2 branches covered.">            for (int j = 0; j &lt; this.array[i].length; j++) {</span>
+<span class="fc" id="L281">                flat[index++] = this.array[i][j];</span>
             }
         }
 
         // Reconstruire le Ndarray selon la forme
-<span class="fc bfc" id="L223" title="All 2 branches covered.">        if (shape.length == 1) {</span>
-<span class="fc" id="L224">            return new Ndarray(flat);</span>
+<span class="fc bfc" id="L286" title="All 2 branches covered.">        if (shape.length == 1) {</span>
+<span class="fc" id="L287">            return new Ndarray(flat);</span>
         } else {
-<span class="fc" id="L226">            float[][] newArray = new float[shape[0]][shape[1]];</span>
-<span class="fc" id="L227">            index = 0;</span>
-<span class="fc bfc" id="L228" title="All 2 branches covered.">            for (int i = 0; i &lt; shape[0]; i++) {</span>
-<span class="fc bfc" id="L229" title="All 2 branches covered.">                for (int j = 0; j &lt; shape[1]; j++) {</span>
-<span class="fc" id="L230">                    newArray[i][j] = flat[index++];</span>
+<span class="fc" id="L289">            float[][] newArray = new float[shape[0]][shape[1]];</span>
+<span class="fc" id="L290">            index = 0;</span>
+<span class="fc bfc" id="L291" title="All 2 branches covered.">            for (int i = 0; i &lt; shape[0]; i++) {</span>
+<span class="fc bfc" id="L292" title="All 2 branches covered.">                for (int j = 0; j &lt; shape[1]; j++) {</span>
+<span class="fc" id="L293">                    newArray[i][j] = flat[index++];</span>
                 }
             }
-<span class="fc" id="L233">            return new Ndarray(newArray);</span>
+<span class="fc" id="L296">            return new Ndarray(newArray);</span>
         }
     }
 }
