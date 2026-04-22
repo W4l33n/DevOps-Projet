@@ -1,7 +1,22 @@
 # DevOps-Projet
 Projet hébergé sur Github.com
 
-[![CI/CD Pipeline](https://github.com/W4l33n/DevOps-Projet/actions/workflows/ci.yml/badge.svg)](https://github.com/W4l33n/DevOps-Projet/actions)
+[![CI/CD Pipeline](https://github.com/W4l33n/DevOps-Projet/actions/workflows/ci.yml/badge.svg)](https://github.com/W4l33n/DevOps-Projet/actions/workflows/ci.yml)
+[![Coverage|108](https://img.shields.io/badge/Coverage-80%25%2B-brightgreen.svg)](https://github.com/W4l33n/DevOps-Projet/actions)
+![SonarQube|107](https://img.shields.io/badge/SonarQube-Passed-success.svg)
+[![Maven Package](https://img.shields.io/badge/GitHub%20Packages-Deployed-blue)](https://github.com/W4l33n/DevOps-Projet/packages)
+![Java 21](https://img.shields.io/badge/Java-21-orange.svg)
+![Infrastructure](https://img.shields.io/badge/Infrastructure-Terraform%20%7C%20Ansible-623CE4.svg)
+![Cloud](https://img.shields.io/badge/Cloud-Google%20Cloud-4285F4.svg)
+
+Badges si on met publique uniquement :
+![Sonar Quality Gate](https://img.shields.io/sonar/quality_gate/W4l33n_DevOps-Projet?server=https%3A%2F%2Fsonarcloud.io)
+![Lines of Code](https://img.shields.io/tokei/lines/github/W4l33n/DevOps-Projet)
+![GitHub license](https://img.shields.io/github/license/W4l33n/DevOps-Projet)
+![GitHub last commit](https://img.shields.io/github/last-commit/W4l33n/DevOps-Projet)
+![GitHub repo size](https://img.shields.io/github/repo-size/W4l33n/DevOps-Projet)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/W4l33n/DevOps-Projet)
+![GitHub contributors](https://img.shields.io/github/contributors/W4l33n/DevOps-Projet)
 
 ## 1. Mise en place du projet
 Chaque membre du groupe avait un compte GitHub, Diana s'est chargée de créer le projet sur son compte (administratrice) car c'est la seule personne à pouvoir associer notre projet à un service externe. Elle nous a ensuite ajoutés au projet en tant que collaborateurs.
@@ -34,6 +49,15 @@ Pour la validation il faut au moins qu'une personne fasse une revue du code que 
 ## 6. Liste et description des images Docker produites
 *(À compléter)*
 
-## 7. Feedback (Retour sur les différents outils utilisés)
+## 7. Déploiement Infrastructure-as-Code
+Nous avons mis en place un déploiement automatisé sur le Cloud Google (GCP) :
+
+- **Terraform** : Script d'approvisionnement (`infrastructure/main.tf`) qui alloue et configure dynamiquement la machine virtuelle, le pare-feu et l'authentification SSH de manière sécurisée.
+
+- **Ansible** : Playbook (`infrastructure/playbook.yml`) qui prend le contrôle de la VM générée par Terraform, installe Docker et ses dépendances, transfère notre code source compressé, compile l'image Docker en direct et lance l'application via un conteneur démonstratif de tests.
+
+- Un script unifié `deploy.sh` permet d'exécuter la chaîne de A à Z en une seule commande, illustrant le principe de "zero-click deployment".
+
+## 8. Feedback (Retour sur les différents outils utilisés)
 
 - Le déploiement du package Maven sur GitHub Packages nous a confrontés aux règles de sécurité en ligne (erreurs 422 qui nous ont poussés à comprendre l'importance des identifiants `groupId` conformes).
