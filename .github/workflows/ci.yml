@@ -12,7 +12,7 @@ on: [push] #test sur la branche integration continue d'abord
 
 #sécurité pour limiter les droits du token GITHUB_TOKEN au strict minimum
 permissions: 
-  contents: read
+  contents: write
   packages: write
   # Allows you to run this workflow manually from the Actions tab
   #workflow_dispatch:
@@ -76,3 +76,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn -B deploy
+
+      # Génération du Site Web Maven (Javadoc + Rapports)
+      - name: Generate Maven Site
+        working-directory: projetDevops
+        run: mvn site
+
+      # Déploiement sur GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./projetDevops/target/site
+          publish_branch: gh-pages
+          commit_message: "docs: déploiement automatique du site Maven"

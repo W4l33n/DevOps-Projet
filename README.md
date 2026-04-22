@@ -2,9 +2,11 @@
 Projet hébergé sur Github.com
 
 [![CI/CD Pipeline](https://github.com/W4l33n/DevOps-Projet/actions/workflows/ci.yml/badge.svg)](https://github.com/W4l33n/DevOps-Projet/actions/workflows/ci.yml)
-[![Coverage|108](https://img.shields.io/badge/Coverage-80%25%2B-brightgreen.svg)](https://github.com/W4l33n/DevOps-Projet/actions)
-![SonarQube|107](https://img.shields.io/badge/SonarQube-Passed-success.svg)
+[![Coverage](https://img.shields.io/badge/Coverage-80%25%2B-brightgreen.svg)](https://W4l33n.github.io/DevOps-Projet/jacoco/index.html)
+![SonarQube](https://img.shields.io/badge/SonarQube-Passed-success.svg)
 [![Maven Package](https://img.shields.io/badge/GitHub%20Packages-Deployed-blue)](https://github.com/W4l33n/DevOps-Projet/packages)
+[![Javadoc](https://img.shields.io/badge/Documentation-Javadoc-brightgreen)](https://W4l33n.github.io/DevOps-Projet/apidocs/index.html)
+[![Project Site](https://img.shields.io/badge/Maven-Project%20Site-blue)](https://W4l33n.github.io/DevOps-Projet/index.html)
 ![Java 21](https://img.shields.io/badge/Java-21-orange.svg)
 ![Infrastructure](https://img.shields.io/badge/Infrastructure-Terraform%20%7C%20Ansible-623CE4.svg)
 ![Cloud](https://img.shields.io/badge/Cloud-Google%20Cloud-4285F4.svg)
