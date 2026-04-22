@@ -1,0 +1,13 @@
+# Ne pas versionner les dossiers Terraform
+.terraform/
+
+# Ne pas versionner l'état de l'infrastructure
+*.tfstate
+*.tfstate.backup
+
+# Ne pas versionner les clés générées ni l'inventaire
+ansible_key.pem
+inventory.ini
+
+# Fichiers temporaires d'archives
+*.tar.gz

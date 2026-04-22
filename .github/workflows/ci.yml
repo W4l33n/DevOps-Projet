@@ -1,0 +1,116 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on: [push] #test sur la branche integration continue d'abord
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  # push:
+  #   branches: [ "main" ]
+  # pull_request:
+  #   branches: [ "main" ]
+
+#sécurité pour limiter les droits du token GITHUB_TOKEN au strict minimum
+permissions: 
+  contents: write
+  packages: write
+  # Allows you to run this workflow manually from the Actions tab
+  #workflow_dispatch:
+  
+defaults:
+  run:
+    shell: bash
+    
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    name: Build & Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out repository under $GITHUB_WORKSPACE
+      -  name: Checkout du  repositor
+         uses: actions/checkout@v4
+         
+      -  name: Set up JDK 17
+         uses: actions/setup-java@v4
+         with:
+           java-version: '17'
+           distribution: 'temurin'
+           cache: 'maven'
+           server-id: github
+           
+      # Runs tests
+      - name: Build Test Analyze with Maven
+        working-directory: projetDevops
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=M1-DevOps-Projet -Dsonar.projectName='M1-DevOps-Projet'
+      # Runs results
+      - name: Upload Tests Results
+        #run the results even if the test stops brutally (error)
+        if: always() 
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: projetDevops/target/surefire-reports/*.xml
+
+      # Génération du Site Web Maven (Javadoc + Rapports)
+      - name: Generate Maven Site & Javadoc
+        working-directory: projetDevops
+        run: mvn site
+
+      - name: Upload Maven Site Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: maven-site-javadoc
+          path: projetDevops/target/site/        
+      #SonarQube
+      # - name: Cache SonarQube packages
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: ~/.sonar/cache
+      #     key: ${{ runner.os }}-sonar
+      #     restore-keys: ${{ runner.os }}-sonar
+      # - name: Build and analyze
+
+      - name: Build and Push Docker Image
+        working-directory: projetDevops
+        run: |
+          ls -la target/
+          #forcer le nom du notre repository en minuscule pour docker
+          REPO_LOWER=$(echo "${{github.repository}}" | tr '[:upper:]' '[:lower:]')
+          IMAGE="ghcr.io/$REPO_LOWER/mon-ndarray-demo:latest"
+          #Construction IMAGE
+          docker build -t $IMAGE .
+          #Connexion registre GitHub
+          echo "${{secrets.GITHUB_TOKEN}}" | docker login ghcr.io -u ${{github.actor}} --password-stdin
+          #envoie IMAGE
+
+          docker push $IMAGE
+      # Deploiement du package sur Github Packages (Uniquement sur push dans une branche précise)
+      - name: Publish to GitHub Packages
+        working-directory: projetDevops
+        # if: github.ref == 'refs/heads/main'    # À décommenter pour ne déployer que sur main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn -B deploy
+
+      # Génération du Site Web Maven (Javadoc + Rapports)
+      - name: Generate Maven Site
+        working-directory: projetDevops
+        run: mvn site
+
+      # Déploiement sur GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./projetDevops/target/site
+          publish_branch: gh-pages
+          commit_message: "docs: déploiement automatique du site Maven"

@@ -1,0 +1,60 @@
+---
+- name: Installer Docker et déployer l'application
+  hosts: all
+  become: yes
+  remote_user: ubuntu
+
+  tasks:
+    - name: Attendre que le système de paquets soit libéré
+      command: while pkill -0 apt-get; do sleep 1; done
+      ignore_errors: yes
+
+    - name: Mettre à jour apt
+      apt:
+        update_cache: yes
+      retries: 3
+      delay: 5
+
+    - name: Installer les dépendances système (Docker, Git...)
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+          - git
+          - docker.io
+        state: present
+
+    - name: Démarrer et activer le service Docker
+      systemd:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Nettoyer l'ancien dossier DevOps-Projet s'il existe
+      file:
+        path: /home/ubuntu/DevOps-Projet
+        state: absent
+
+    - name: Déployer l'archive locale du projet DevOps
+      unarchive:
+        src: project.tar.gz
+        dest: /home/ubuntu/
+        owner: ubuntu
+        group: ubuntu
+      
+    - name: Renommer le dossier déployé
+      command: mv /home/ubuntu/project /home/ubuntu/DevOps-Projet
+
+    - name: Construire l'image Docker
+      command: docker build -t test-devops-projet .
+      args:
+        chdir: /home/ubuntu/DevOps-Projet
+
+    - name: Nettoyer le conteneur précédent s'il existe
+      command: docker rm -f demo-devops
+      ignore_errors: yes
+
+    - name: Lancer le conteneur Docker de test/démo
+      command: docker run -d --name demo-devops test-devops-projet
